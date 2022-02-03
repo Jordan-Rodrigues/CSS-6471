@@ -1,0 +1,25 @@
+\begin{thebibliography}{3}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+
+\bibitem[{Knuth(1984)}]{knuth:1984}
+Knuth, D.~E. 1984.
+\newblock Literate Programming.
+\newblock \emph{The Computer Journal} 27(2): 97--111.
+
+\bibitem[{Knuth(1986)}]{texbook}
+Knuth, D.~E. 1986.
+\newblock \emph{The \TeX{} Book}.
+\newblock Addison-Wesley Professional.
+
+\bibitem[{Lamport(1994)}]{latex2e}
+Lamport, L. 1994.
+\newblock \emph{\LaTeX: a Document Preparation System}.
+\newblock Massachusetts: Addison Wesley, 2 edition.
+
+\end{thebibliography}

@@ -1,0 +1,32 @@
+Proposal Content:
+
+Abstract (2 pts)
+1 paragraph
+Briefly summarize the goal, related work, research goals/questions, and methods of the research project.
+
+Introduction & Related Work (3 pts)
+2-3 paragraphs
+What is the motivating problem for your research project? What are the research questions to be examined for the project? If you are contributing a dataset, what do you envision the output of your work to look like? Who can use this dataset, and on what kind of problems would this dataset be ideal? If you are contributing analysis, how are these findings theoretically significant or broadly important for society?
+-0.5 pts, introduction does not clearly describe a motivating problem
+-1 pt, introduction does not mention the research goals/questions clearly
+Related Work: Please cite 3-5 related studies and explain their contribution to the problem space. Compared to prior work, how is your project trying to address these gaps? How will your project contribute new knowledge?
+-1.5 pts, related work does not address the contribution of previous approaches to the problem space, e.g. does not mention specific modeling approaches.
+
+Methods (3 pts)
+1-3 paragraphs explaining your research methodology. What data will you use? What model? What statistical tests will you run?
+-1.5 pt, the data pipeline is not clearly or specifically described 
+-1.5 pt, the computational model / statistical analysis is not clearly or specifically described 
+
+Timeline (1 pt) 
+1 short paragraph describing a weekly timeline for your project and task responsibilities by team members. By when do you hope to have acquired your data? When will you build or select the statistical / computational models and when will you run them? When will you finalize the main analyses and plots and paper writing? 
+-0.5 pts, basic project milestones are not identified and assigned to team members
+-0.5 pts, rough dates for completing basic project milestones have not been identified
+
+Writing (1 pt)
+-1 pts, lots of grammar errors and sentences hard to understand. Please double check your writing to fix any grammar errors, and proof-read your report before the submission.
+Submission Format: 
+
+The proposal should be two pages in length, not including references.
+The proposal should be written in AAAI two-column style (Links to an external site.). 
+The proposal should be submitted as a PDF file.
+Only one team member should submit the proposal.
