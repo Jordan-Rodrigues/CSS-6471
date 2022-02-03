@@ -1,3 +1,6 @@
+
+
+~related works~
 Data on sentiments and emotions of olympic-themed tweets
 https://www.sciencedirect.com/science/article/pii/S2352340919302203
 
@@ -13,3 +16,15 @@ https://link.springer.com/content/pdf/10.1057/dddmp.2014.36.pdf
 World Cup 2014 in the Twitter World: A big data analysis of sentiments
 in U.S. sports fans’ tweets
 https://reader.elsevier.com/reader/sd/pii/S074756321500103X?token=9106625B7EB3A7342A9221166915956FCAB6A9B1F4845DED2556E6694F6AADCDC0A86234656D274B1CF7831D82C0AAE8&originRegion=us-east-1&originCreation=20220203214505
+
+
+~intro~
+#1 https://www.britannica.com/sports/Olympic-Games/Women-and-the-Olympic-Games
+
+#2 https://olympics.com/ioc/news/more-fans-than-ever-connected-to-the-olympic-games
+
+#3 https://www.socialmediatoday.com/social-networks/how-2016-rio-olympics-dominated-social-media-infographic
+
+#4 https://www.hrw.org/news/2020/05/12/covid-19-fueling-anti-asian-racism-and-xenophobia-worldwide
+
+#5 https://www.kaggle.com/gpreda/tokyo-olympics-2020-tweets
