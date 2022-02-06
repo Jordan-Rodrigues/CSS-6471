@@ -3,44 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Formatting-Instructions-LaTeX-2021.aux
 The style file: aaai21.bst
 Database file #1: refs.bib
-You've used 3 entries,
+You've used 6 entries,
             2951 wiz_defined-function locations,
-            613 strings with 5096 characters,
-and the built_in function-call counts, 1448 in all, are:
-= -- 110
-> -- 36
+            641 strings with 5929 characters,
+and the built_in function-call counts, 3688 in all, are:
+= -- 297
+> -- 150
 < -- 0
-+ -- 17
-- -- 13
-* -- 74
-:= -- 251
-add.period$ -- 12
-call.type$ -- 3
-change.case$ -- 16
-chr.to.int$ -- 4
-cite$ -- 3
-duplicate$ -- 116
-empty$ -- 135
-format.name$ -- 12
-if$ -- 281
++ -- 56
+- -- 49
+* -- 239
+:= -- 606
+add.period$ -- 31
+call.type$ -- 6
+change.case$ -- 39
+chr.to.int$ -- 7
+cite$ -- 6
+duplicate$ -- 271
+empty$ -- 291
+format.name$ -- 57
+if$ -- 732
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 26
-newline$ -- 24
-num.names$ -- 12
-pop$ -- 58
+missing$ -- 59
+newline$ -- 46
+num.names$ -- 24
+pop$ -- 135
 preamble$ -- 1
-purify$ -- 15
+purify$ -- 36
 quote$ -- 0
-skip$ -- 43
+skip$ -- 104
 stack$ -- 0
-substring$ -- 57
-swap$ -- 46
+substring$ -- 141
+swap$ -- 126
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 21
+type$ -- 48
 warning$ -- 0
-while$ -- 14
+while$ -- 30
 width$ -- 0
-write$ -- 46
+write$ -- 99

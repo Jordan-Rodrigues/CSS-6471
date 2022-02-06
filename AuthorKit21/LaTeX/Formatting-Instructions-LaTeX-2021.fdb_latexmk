@@ -1,14 +1,14 @@
 # Fdb version 3
-["bibtex Formatting-Instructions-LaTeX-2021"] 1643927698 "Formatting-Instructions-LaTeX-2021.aux" "Formatting-Instructions-LaTeX-2021.bbl" "Formatting-Instructions-LaTeX-2021" 1643927902
+["bibtex Formatting-Instructions-LaTeX-2021"] 1644175466 "Formatting-Instructions-LaTeX-2021.aux" "Formatting-Instructions-LaTeX-2021.bbl" "Formatting-Instructions-LaTeX-2021" 1644175467
   "./aaai21.bst" 1599667034 31293 7b256170c8a131a66cc3654ceca33741 ""
-  "Formatting-Instructions-LaTeX-2021.aux" 1643927901 210 328509b6fda27abb35cded74e817d307 "pdflatex"
-  "refs.bib" 1643922255 1163 b3fbb883696bb6d82345d0093a0a39e8 ""
+  "Formatting-Instructions-LaTeX-2021.aux" 1644175467 512 4385cfdad1306764a3de56312b440582 "pdflatex"
+  "refs.bib" 1644175425 4460 cb6f50fa3440ab7f82f160e06672e80b ""
   (generated)
-  "Formatting-Instructions-LaTeX-2021.blg"
   "Formatting-Instructions-LaTeX-2021.bbl"
-["pdflatex"] 1643927900 "/Users/jrod/Documents/Courses/Current/CSS-6471/AuthorKit21/LaTeX/Formatting-Instructions-LaTeX-2021.tex" "/Users/jrod/Documents/Courses/Current/CSS-6471/AuthorKit21/LaTeX/Formatting-Instructions-LaTeX-2021.pdf" "Formatting-Instructions-LaTeX-2021" 1643927902
-  "/Users/jrod/Documents/Courses/Current/CSS-6471/AuthorKit21/LaTeX/Formatting-Instructions-LaTeX-2021.aux" 1643927901 210 328509b6fda27abb35cded74e817d307 ""
-  "/Users/jrod/Documents/Courses/Current/CSS-6471/AuthorKit21/LaTeX/Formatting-Instructions-LaTeX-2021.tex" 1643927900 18929 04c58f57ee294650c653b0afe567df9b ""
+  "Formatting-Instructions-LaTeX-2021.blg"
+["pdflatex"] 1644175466 "/Users/jrod/Documents/Courses/Current/CSS-6471/AuthorKit21/LaTeX/Formatting-Instructions-LaTeX-2021.tex" "/Users/jrod/Documents/Courses/Current/CSS-6471/AuthorKit21/LaTeX/Formatting-Instructions-LaTeX-2021.pdf" "Formatting-Instructions-LaTeX-2021" 1644175467
+  "/Users/jrod/Documents/Courses/Current/CSS-6471/AuthorKit21/LaTeX/Formatting-Instructions-LaTeX-2021.aux" 1644175467 512 4385cfdad1306764a3de56312b440582 ""
+  "/Users/jrod/Documents/Courses/Current/CSS-6471/AuthorKit21/LaTeX/Formatting-Instructions-LaTeX-2021.tex" 1644175425 19980 c56eb28a9b0e1d0534dbfaa83c895585 ""
   "/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2020/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2020/texmf-dist/fonts/tfm/adobe/times/ptmb7t.tfm" 1136768653 2172 fd0c924230362ff848a33632ed45dc23 ""
@@ -50,13 +50,13 @@
   "/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1586288239 4811913 0be9a7e86c70a26e5e3042966bcd7097 ""
   "/usr/local/texlive/2020/texmf-var/web2c/pdftex/pdflatex.fmt" 1586288259 2432462 fd0fa20e9a3cb5f8169fd0ba1c955158 ""
   "/usr/local/texlive/2020/texmf.cnf" 1586288231 577 d60164b4589a341208aff7a667fbbdcb ""
-  "Formatting-Instructions-LaTeX-2021.aux" 1643927901 210 328509b6fda27abb35cded74e817d307 "pdflatex"
-  "Formatting-Instructions-LaTeX-2021.bbl" 1643927698 779 2fd6c7a4c3f3f623782c1ad33d9c7e22 "bibtex Formatting-Instructions-LaTeX-2021"
-  "Formatting-Instructions-LaTeX-2021.tex" 1643927900 18929 04c58f57ee294650c653b0afe567df9b ""
+  "Formatting-Instructions-LaTeX-2021.aux" 1644175467 512 4385cfdad1306764a3de56312b440582 "pdflatex"
+  "Formatting-Instructions-LaTeX-2021.bbl" 1644175466 1977 8fe0944194dc80b161d6cc829e8dc953 "bibtex Formatting-Instructions-LaTeX-2021"
+  "Formatting-Instructions-LaTeX-2021.tex" 1644175425 19980 c56eb28a9b0e1d0534dbfaa83c895585 ""
   "aaai21.sty" 1599667034 7611 466a262fb477dcdd96c0e9ad2ce6f238 ""
   (generated)
-  "Formatting-Instructions-LaTeX-2021.log"
-  "Formatting-Instructions-LaTeX-2021.pdf"
-  "Formatting-Instructions-LaTeX-2021.aux"
   "/Users/jrod/Documents/Courses/Current/CSS-6471/AuthorKit21/LaTeX/Formatting-Instructions-LaTeX-2021.pdf"
   "/Users/jrod/Documents/Courses/Current/CSS-6471/AuthorKit21/LaTeX/Formatting-Instructions-LaTeX-2021.log"
+  "Formatting-Instructions-LaTeX-2021.pdf"
+  "Formatting-Instructions-LaTeX-2021.aux"
+  "Formatting-Instructions-LaTeX-2021.log"

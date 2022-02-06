@@ -137,10 +137,26 @@ What is the motivating problem for your research project? What are the research 
 \section{Related Work}
 Other works have looked at Olympics related discussions through tweets on Twitter. Sentiment analysis was conducted on a Rio de Janeiro Olympic tweets dataset released by \cite{VERTALKA2019103869}. This dataset included over 21 million tweets with location data, language, and tweet content. This sentiment analysis was done in \cite{KASSENSNOOR2019229}, finding tweets about host cities were positive, while tweets about the IOC were negative. The study scored tweet sentiment by taking the difference between positive and negative key words matched from the Mohammad and Turney's (2010) lexicon. This method meant only English language tweets could be scored. This work was important to show the positive effects on host city image perception from hosting the Olympics on a global population. Our work focuses more on understanding different topics and sentiments around those topics of discussion, rather than just focussing on host cities. 
 
-General sentiment analysis and engagement is explored by \cite{5718715} during the Winter 2010 Olympics. This paper found positive tweets were forwarded more and negative users were more passionate. The study calculated sentiment using the SentiStrength system. The work poses future questions on how people engage or cluster around topics or tweet tones, and how social network impacts engagement. Our work focuses on understanding the topics that have the highest engagement. 
+General sentiment analysis and engagement is explored by \cite{5718715} during the Winter 2010 Olympics. This paper found positive tweets were forwarded more, and that negative users were more passionate. The study calculated sentiment using the SentiStrength system. The work poses future questions on how people engage or cluster around topics or tweet tones, and how social network impacts engagement. Our work focuses on understanding the topics that have the highest engagement. 
 
 
 \section{Methods}
+For our data we will be working with two \emph{Tokyo 2020 Olympics Tweet} Datasets [#5, #6] on Kaggle. The first dataset queries a sample of tweets with the hashtag \emph{#Tokyo2020} between 07/24/2021 - 07/27/2021, leading to a total of 160K+ tweets. The second dataset was run daily from 07/25/2021 - 07/31/2021. We'll use distinct tweet_ids to filter duplicate tweets. Both of these datasets share common features such as user location, tweet content, info on retweets and favorites, as well as info on user popularity (measured by friend and follower count). 
+
+Our research questions are as follows. 1) How does Twitter discussion around the Olympics vary as a function of region/location? We want to better understand whether regions have differences in the prevailing sentiment when they discuss the Olympics as well as whether there are differences in the types of Olympic-related topics that are discussed.
+
+2) What are the most common themes/topics that emerged during the discussion of the Tokyo 2020 Olympics? Abstracting away the regional component, we want to understand the 'Twitter scene' as a whole. Were Twitters users mainly focused on discussing the events themselves, athletes, COVID-19, or other Olympics-related controversies?
+
+3) How do tweet characteristics impact tweet virulence? Is there a relationship between tweet sentiment and virulence (defined as a linear combination of likes and retweets)? What about topics and virulence? Do we find that a small portion of users drive a large proportion of virulent Olympics tweets; if so, what are the characteristics of these users?
+
+To answer our research questions, we start by completing an initial cleaning of the data. This will by filtering out incoherent tweets (empty spaces, random characters) as well as eliminating non-English tweets. While we note that this can potentially lead to inaccurate representations of regional trends (as English-tweeting individuals may not be representative of all tweeters in other regions), language-aware modeling will be left to future work. We then intend to carry out other elements of text processing such as stopword removal, stemming, and lemmatization. 
+
+These 'processed' texts will allow us to perform topic modeling, which will be carried out the Gensim implementation of Latent Dirichlet Allocation (LDA). These topics will then drive insights around thematic emergence both regionally and non-regionally.
+
+Finally, to study how tweet characteristics impact tweet virulence for Olympic discussion, we plan on carrying out a statistical analysis. We'll start by carrying out a graphical normality test (such as a QQ plot) to determine whether tweet virulence follows a normal distribution (though we suspect it does not). From here, we'll carry out ANOVA/Kruskal Wallis Tests or a T-Test/Mann-Whitney U-Test based on what dimensions of the tweets we are comparing for virulence. For example, a regional analysis may make use of Kruskal Wallis, while testing how the presence of the word 'Olympics' impacts virulence would require a Mann-Whitney. 
+
+#consider normalizing for follower and friend counts
+
 Methods (3 pts)
 1-3 paragraphs explaining your research methodology. What data will you use? What model? What statistical tests will you run?
 -1.5 pt, the data pipeline is not clearly or specifically described 

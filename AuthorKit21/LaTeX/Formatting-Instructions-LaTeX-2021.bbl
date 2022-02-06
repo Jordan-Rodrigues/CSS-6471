@@ -1,4 +1,4 @@
-\begin{thebibliography}{3}
+\begin{thebibliography}{6}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{URL }
@@ -6,6 +6,24 @@
   \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
   \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
   \urlstyle{rm}\Url}\fi
+
+\bibitem[{Gruzd, Doiron, and Mai(2011)}]{5718715}
+Gruzd, A.; Doiron, S.; and Mai, P. 2011.
+\newblock Is Happiness Contagious Online? A Case of Twitter and the 2010 Winter
+  Olympics.
+\newblock In \emph{2011 44th Hawaii International Conference on System
+  Sciences}, 1--9.
+\newblock \doi{10.1109/HICSS.2011.259}.
+
+\bibitem[{Kassens-Noor, Vertalka, and Wilson(2019)}]{KASSENSNOOR2019229}
+Kassens-Noor, E.; Vertalka, J.; and Wilson, M. 2019.
+\newblock Good games, bad host? Using big data to measure public attention and
+  imagery of the Olympic Games.
+\newblock \emph{Cities} 90: 229--236.
+\newblock ISSN 0264-2751.
+\newblock \doi{https://doi.org/10.1016/j.cities.2019.02.009}.
+\newblock
+  \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S026427511830307X}.
 
 \bibitem[{Knuth(1984)}]{knuth:1984}
 Knuth, D.~E. 1984.
@@ -21,5 +39,14 @@ Knuth, D.~E. 1986.
 Lamport, L. 1994.
 \newblock \emph{\LaTeX: a Document Preparation System}.
 \newblock Massachusetts: Addison Wesley, 2 edition.
+
+\bibitem[{Vertalka, Kassens-Noor, and Wilson(2019)}]{VERTALKA2019103869}
+Vertalka, J.~J.; Kassens-Noor, E.; and Wilson, M. 2019.
+\newblock Data on sentiments and emotions of olympic-themed tweets.
+\newblock \emph{Data in Brief} 24: 103869.
+\newblock ISSN 2352-3409.
+\newblock \doi{https://doi.org/10.1016/j.dib.2019.103869}.
+\newblock
+  \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S2352340919302203}.
 
 \end{thebibliography}
