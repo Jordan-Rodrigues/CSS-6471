@@ -133,3 +133,11 @@ dmypy.json
 
 #DS Store
 .DS_Store
+
+# Latex Files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex.gz
