@@ -9,6 +9,7 @@ Introduction & Related Work (3 pts)
 What is the motivating problem for your research project? What are the research questions to be examined for the project? If you are contributing a dataset, what do you envision the output of your work to look like? Who can use this dataset, and on what kind of problems would this dataset be ideal? If you are contributing analysis, how are these findings theoretically significant or broadly important for society?
 -0.5 pts, introduction does not clearly describe a motivating problem
 -1 pt, introduction does not mention the research goals/questions clearly
+
 Related Work: Please cite 3-5 related studies and explain their contribution to the problem space. Compared to prior work, how is your project trying to address these gaps? How will your project contribute new knowledge?
 -1.5 pts, related work does not address the contribution of previous approaches to the problem space, e.g. does not mention specific modeling approaches.
 
