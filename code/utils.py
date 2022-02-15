@@ -2,6 +2,10 @@ import pandas as pd
 import fasttext
 import re
 import numpy as np
+from googleapiclient import discovery
+import json
+import keys
+import time
 
 def get_merged(file_1: str, file_2: str, exists=False) -> pd.DataFrame:
     """
@@ -119,4 +123,66 @@ def get_english(df: pd.DataFrame, exists=False) -> pd.DataFrame:
     english.to_csv('../data/english.csv')
     return english
 
+def get_toxicity(file_name: pd.DataFrame, start_pos: int, end_pos: int) -> pd.DataFrame:
+    """
+    Run this (with a number of requests) to analyze some amount of tweets for toxicity
 
+    Parameters
+    ----------
+    file_name: str
+        the file containing the df to be updated
+    start_pos: int
+        the index of the df to start at
+    requests: int
+        the index of the df to end at
+    
+    Returns
+    -------
+    toxic_df: pd.DataFrame
+        dataframe with a new column for toxicity
+    """
+
+    #read df
+    df = pd.read_csv(file_name)
+
+    #build client
+    client = discovery.build(
+    "commentanalyzer",
+    "v1alpha1",
+    developerKey=keys.PERS_KEY,
+    discoveryServiceUrl="https://commentanalyzer.googleapis.com/$discovery/rest?version=v1alpha1",
+    static_discovery=False,
+    )
+
+    #find starting index
+
+    analyze_request = {
+    'comment': { 'text': 'friendly greetings from python' },
+    'requestedAttributes': {'TOXICITY': {}},
+    }
+
+
+    idx = start_pos
+    for i in range(idx, end_pos):
+        #don't break the API lol
+        time.sleep(1)
+        tweet = df['text'].values[i]
+
+        #get rid of mentions
+        tweet = re.sub("@[A-Za-z0-9_]+","", tweet)
+
+        analyze_request['comment']['text'] = tweet 
+        try:
+            response = client.comments().analyze(body=analyze_request).execute()
+            tox_score = response['attributeScores']['TOXICITY']['summaryScore']['value']
+        except Exception as e:
+            print(e)
+            print('failed', i, tweet)
+            tox_score = -1
+        
+        df.at[i, 'toxicity'] = tox_score
+
+    #save df
+    df.to_csv('../data/toxicity.csv', index=False)
+
+    return end_pos
