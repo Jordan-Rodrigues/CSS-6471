@@ -142,3 +142,6 @@ dmypy.json
 *.fdb_latexmk
 *.fls
 *.synctex.gz
+
+#api
+/code/keys.py
