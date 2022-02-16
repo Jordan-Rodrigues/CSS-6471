@@ -3,3 +3,4 @@ numpy
 spacy
 fasttext
 google-api-python-client
+detoxify
