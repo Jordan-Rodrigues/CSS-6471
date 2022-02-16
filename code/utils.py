@@ -6,6 +6,7 @@ from googleapiclient import discovery
 import json
 import keys
 import time
+from detoxify import Detoxify
 
 def get_merged(file_1: str, file_2: str, exists=False) -> pd.DataFrame:
     """
@@ -181,8 +182,64 @@ def get_toxicity(file_name: pd.DataFrame, start_pos: int, end_pos: int) -> pd.Da
             tox_score = -1
         
         df.at[i, 'toxicity'] = tox_score
+        if i % 500 == 0:
+            df.to_csv(file_name, index=False)
 
     #save df
     df.to_csv(file_name, index=False)
 
     return end_pos
+
+def get_detoxicity(file_name: pd.DataFrame, batch_size: int=10, start_pos: int=0, save_interval: int=10) -> pd.DataFrame:
+    """
+    Run this (with a number of requests) to analyze some amount of tweets for toxicity
+
+    Parameters
+    ----------
+    file_name: str
+        the file containing the df to be updated
+    batch_size: int
+        batch size
+    start_pos: int
+        the index of the df to start at
+    save_interval: int
+        how many batches to save after
+    
+    Returns
+    -------
+    toxic_df: pd.DataFrame
+        dataframe with a new column for toxicity
+    """
+
+    #read df
+    df = pd.read_csv(file_name)
+    print('loaded df')
+    detoxify_model = Detoxify('unbiased')
+    print('loaded detoxify model')
+
+    for i in range(int((len(df) - start_pos) / batch_size)):
+        s = start_pos + batch_size * i
+        e = s + batch_size
+        predict_update_df(df, detoxify_model, s, e)
+        if i % save_interval == 0:
+            df.to_csv(file_name, index=False)
+            print('saved', start_pos + batch_size * (i+1)) 
+
+    
+    predict_update_df(df, detoxify_model, int(len(df) / batch_size), len(df))
+
+    #save df
+    df.to_csv(file_name, index=False)
+
+    return end_pos
+
+def predict_update_df(df, detoxify_model, start_pos, end_pos):
+    results = detoxify_model.predict(df['text'][start_pos:end_pos].tolist())
+
+    df['toxicity'][start_pos:end_pos] = results['toxicity']
+    df['severe_toxicity'][start_pos:end_pos] = results['severe_toxicity']
+    df['identity_attack'][start_pos:end_pos] = results['identity_attack']
+
+
+if __name__ == '__main__':
+    get_detoxicity('../data/toxicity3.csv', 100, 7750, 10)
