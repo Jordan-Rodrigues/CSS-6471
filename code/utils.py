@@ -183,6 +183,6 @@ def get_toxicity(file_name: pd.DataFrame, start_pos: int, end_pos: int) -> pd.Da
         df.at[i, 'toxicity'] = tox_score
 
     #save df
-    df.to_csv('../data/toxicity.csv', index=False)
+    df.to_csv(file_name, index=False)
 
     return end_pos
