@@ -216,13 +216,14 @@ def get_detoxicity(file_name: pd.DataFrame, batch_size: int=10, start_pos: int=0
     print('loaded df')
     detoxify_model = Detoxify('unbiased')
     print('loaded detoxify model')
+    print('do not terminate when saving... is shown, only after saved')
 
     for i in range(int((len(df) - start_pos) / batch_size)):
         s = start_pos + batch_size * i
         e = s + batch_size
         predict_update_df(df, detoxify_model, s, e)
         if i % save_interval == 0:
-            print('starting to save, DO NOT TERMINATE', end='\r')
+            print('saving...', end='\r')
             df.to_csv(file_name, index=False)
             print('saved', start_pos + batch_size * i) 
 
