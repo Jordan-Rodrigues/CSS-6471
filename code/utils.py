@@ -222,16 +222,18 @@ def get_detoxicity(file_name: pd.DataFrame, batch_size: int=10, start_pos: int=0
         s = start_pos + batch_size * i
         e = s + batch_size
         predict_update_df(df, detoxify_model, s, e)
-        if i % save_interval == 0:
+        if save_interval > 0 and i % save_interval == 0:
             print('saving...', end='\r')
             df.to_csv(file_name, index=False)
             print('saved', start_pos + batch_size * i) 
 
     
-    predict_update_df(df, detoxify_model, int((len(df) - start_pos) / batch_size), len(df))
+    predict_update_df(df, detoxify_model, int((len(df) - start_pos) / batch_size) + start_pos, len(df))
 
     #save df
     df.to_csv(file_name, index=False)
+
+    print('saved')
 
     return
 
@@ -245,4 +247,4 @@ def predict_update_df(df, detoxify_model, start_pos, end_pos):
 
 if __name__ == '__main__':
     # get_detoxicity(file_name: pd.DataFrame, batch_size: int=10, start_pos: int=0, save_interval: int=10)
-    get_detoxicity('../data/toxicity4.csv', 2, 195500, 500)
+    get_detoxicity('../data/toxicity4.csv', 2, 433770, -1)
