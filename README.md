@@ -8,3 +8,8 @@ Download model from [FastAI Language identification](https://fasttext.cc/docs/en
 Request access to [Perspectives API](https://developers.perspectiveapi.com/s/docs-get-started). Follow guide, and put key into a `code/keys.py` file with `PERS_KEY=<key>`. 
 
 Run cells, make sure names for csv are consistent
+
+Notes:
+- Need to specify difference in tweet length as a function of year
+- Need to rerun toxicity with regex
+- Need to rerun sentiment code once \n issue is fixed
