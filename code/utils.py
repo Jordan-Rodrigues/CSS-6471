@@ -216,30 +216,35 @@ def get_detoxicity(file_name: pd.DataFrame, batch_size: int=10, start_pos: int=0
     print('loaded df')
     detoxify_model = Detoxify('unbiased')
     print('loaded detoxify model')
+    print('do not terminate when saving... is shown, only after saved')
 
     for i in range(int((len(df) - start_pos) / batch_size)):
         s = start_pos + batch_size * i
         e = s + batch_size
         predict_update_df(df, detoxify_model, s, e)
-        if i % save_interval == 0:
+        if save_interval > 0 and i % save_interval == 0:
+            print('saving...', end='\r')
             df.to_csv(file_name, index=False)
-            print('saved', start_pos + batch_size * (i+1)) 
+            print('saved', start_pos + batch_size * i) 
 
     
-    predict_update_df(df, detoxify_model, int(len(df) / batch_size), len(df))
+    predict_update_df(df, detoxify_model, int((len(df) - start_pos) / batch_size) + start_pos, len(df))
 
     #save df
     df.to_csv(file_name, index=False)
 
-    return end_pos
+    print('saved')
+
+    return
 
 def predict_update_df(df, detoxify_model, start_pos, end_pos):
     results = detoxify_model.predict(df['text'][start_pos:end_pos].tolist())
 
-    df['toxicity'][start_pos:end_pos] = results['toxicity']
-    df['severe_toxicity'][start_pos:end_pos] = results['severe_toxicity']
-    df['identity_attack'][start_pos:end_pos] = results['identity_attack']
+    df.iloc[start_pos:end_pos, df.columns.get_loc('toxicity')] = results['toxicity']
+    df.iloc[start_pos:end_pos, df.columns.get_loc('severe_toxicity')] = results['severe_toxicity']
+    df.iloc[start_pos:end_pos, df.columns.get_loc('identity_attack')] = results['identity_attack']
 
 
 if __name__ == '__main__':
-    get_detoxicity('../data/toxicity3.csv', 100, 7750, 10)
+    # get_detoxicity(file_name: pd.DataFrame, batch_size: int=10, start_pos: int=0, save_interval: int=10)
+    get_detoxicity('../data/toxicity4.csv', 2, 433770, -1)
