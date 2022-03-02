@@ -126,7 +126,7 @@ def get_english(df: pd.DataFrame, exists=False) -> pd.DataFrame:
 
 def get_toxicity(file_name: pd.DataFrame, start_pos: int, end_pos: int) -> pd.DataFrame:
     """
-    Run this (with a number of requests) to analyze some amount of tweets for toxicity
+    Run this (with a number of requests) to analyze some amount of tweets for toxicity (via perspective API)
 
     Parameters
     ----------
@@ -177,7 +177,7 @@ def get_toxicity(file_name: pd.DataFrame, start_pos: int, end_pos: int) -> pd.Da
             response = client.comments().analyze(body=analyze_request).execute()
             tox_score = response['attributeScores']['TOXICITY']['summaryScore']['value']
         except Exception as e:
-            print(e)
+
             print('failed', i, tweet)
             tox_score = -1
         
@@ -192,7 +192,7 @@ def get_toxicity(file_name: pd.DataFrame, start_pos: int, end_pos: int) -> pd.Da
 
 def get_detoxicity(file_name: pd.DataFrame, batch_size: int=10, start_pos: int=0, save_interval: int=10) -> pd.DataFrame:
     """
-    Run this (with a number of requests) to analyze some amount of tweets for toxicity
+    Run this (with a number of requests) to analyze some amount of tweets for toxicity (via detoxify)
 
     Parameters
     ----------
@@ -213,38 +213,46 @@ def get_detoxicity(file_name: pd.DataFrame, batch_size: int=10, start_pos: int=0
 
     #read df
     df = pd.read_csv(file_name)
-    print('loaded df')
     detoxify_model = Detoxify('unbiased')
-    print('loaded detoxify model')
-    print('do not terminate when saving... is shown, only after saved')
-
     for i in range(int((len(df) - start_pos) / batch_size)):
         s = start_pos + batch_size * i
         e = s + batch_size
         predict_update_df(df, detoxify_model, s, e)
         if save_interval > 0 and i % save_interval == 0:
-            print('saving...', end='\r')
-            df.to_csv(file_name, index=False)
-            print('saved', start_pos + batch_size * i) 
+            df.to_csv(file_name, index=False) #Note that interrupting during this interval may cause bugs
 
     
     predict_update_df(df, detoxify_model, int((len(df) - start_pos) / batch_size) + start_pos, len(df))
 
-    #save df
+
     df.to_csv(file_name, index=False)
-
-    print('saved')
-
     return
 
 def predict_update_df(df, detoxify_model, start_pos, end_pos):
-    results = detoxify_model.predict(df['text'][start_pos:end_pos].tolist())
+    """
+    Helper function for get_toxicity which makes a call to the detoxify model and 
+    updates the dataframe in-place
 
+    Parameters
+    ----------
+    df: pd.DataFrame
+        the dataframe to be updated
+    detoxify_model: model
+        model to use for inference
+    start_pos: int
+        the index of the df to start at
+    end_pos: int
+       the index of the df to end at
+    
+    Returns
+    -------
+    None
+    """
+    results = detoxify_model.predict(df['text'][start_pos:end_pos].tolist())
     df.iloc[start_pos:end_pos, df.columns.get_loc('toxicity')] = results['toxicity']
     df.iloc[start_pos:end_pos, df.columns.get_loc('severe_toxicity')] = results['severe_toxicity']
     df.iloc[start_pos:end_pos, df.columns.get_loc('identity_attack')] = results['identity_attack']
 
 
 if __name__ == '__main__':
-    # get_detoxicity(file_name: pd.DataFrame, batch_size: int=10, start_pos: int=0, save_interval: int=10)
     get_detoxicity('../data/toxicity4.csv', 2, 433770, -1)
