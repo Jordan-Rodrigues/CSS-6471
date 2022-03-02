@@ -4,3 +4,4 @@ spacy
 fasttext
 google-api-python-client
 detoxify
+nltk
