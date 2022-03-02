@@ -218,24 +218,24 @@ def get_detoxicity(file_name: pd.DataFrame, batch_size: int=10, start_pos: int=0
     print('loaded detoxify model')
     print('do not terminate when saving... is shown, only after saved')
 
+    s = start_pos
+    e = s + batch_size
+
     for i in range(int((len(df) - start_pos) / batch_size)):
-        s = start_pos + batch_size * i
-        e = s + batch_size
+        s += batch_size
+        e += batch_size
         predict_update_df(df, detoxify_model, s, e)
         if save_interval > 0 and i % save_interval == 0:
             print('saving...', end='\r')
             df.to_csv(file_name, index=False)
-            print('saved', start_pos + batch_size * i) 
+            print('saved', s, '+', batch_size)
 
-    
-    predict_update_df(df, detoxify_model, int((len(df) - start_pos) / batch_size) + start_pos, len(df))
+    predict_update_df(df, detoxify_model, e, len(df))
 
     #save df
     df.to_csv(file_name, index=False)
 
-    print('saved')
-
-    return
+    print('saved all', e)
 
 def predict_update_df(df, detoxify_model, start_pos, end_pos):
     results = detoxify_model.predict(df['text'][start_pos:end_pos].tolist())
@@ -247,4 +247,4 @@ def predict_update_df(df, detoxify_model, start_pos, end_pos):
 
 if __name__ == '__main__':
     # get_detoxicity(file_name: pd.DataFrame, batch_size: int=10, start_pos: int=0, save_interval: int=10)
-    get_detoxicity('../data/toxicity4.csv', 2, 433770, -1)
+    get_detoxicity('../data/2022toxicity.csv', 2, 168000, -1)
