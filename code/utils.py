@@ -268,9 +268,3 @@ def parse_tweets(df, exists=False, downloads=False):
     df = df[~(df['text'].str.contains('…', regex=False))]
     df.to_csv('../data/parsed.csv', index=False)
     return df
-
-
-
-if __name__ == '__main__':
-    # get_detoxicity(file_name: pd.DataFrame, batch_size: int=10, start_pos: int=0, save_interval: int=10)
-    get_detoxicity('../data/2022toxicity.csv', 2, 168000, -1)
