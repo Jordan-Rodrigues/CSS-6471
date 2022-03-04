@@ -2,11 +2,6 @@ import pandas as pd
 import fasttext
 import re
 import numpy as np
-from googleapiclient import discovery
-import json
-import keys
-import time
-from detoxify import Detoxify
 from nltk.sentiment.vader import SentimentIntensityAnalyzer 
 from nltk import tokenize 
 import nltk
@@ -64,6 +59,7 @@ def get_merged(file_1: str, file_2: str, exists=False) -> pd.DataFrame:
     df_2 = df_2[~df_2['id'].isin(ids)]
     merged = pd.concat([df_1, df_2])
     merged.set_index(['id'], inplace=True, verify_integrity=True)
+    merged.reset_index(inplace=True) # keep id in a non index column
 
     #to csv
     merged.to_csv('../data/merged.csv')
@@ -172,144 +168,6 @@ def get_english(df: pd.DataFrame, exists=False) -> pd.DataFrame:
     #to csv
     english.to_csv('../data/english.csv')
     return english
-
-def get_toxicity(file_name: pd.DataFrame, start_pos: int, end_pos: int) -> pd.DataFrame:
-    """
-    Run this (with a number of requests) to analyze some amount of tweets for toxicity (via perspective API)
-
-    Parameters
-    ----------
-    file_name: str
-        the file containing the df to be updated
-    start_pos: int
-        the index of the df to start at
-    requests: int
-        the index of the df to end at
-    
-    Returns
-    -------
-    toxic_df: pd.DataFrame
-        dataframe with a new column for toxicity
-    """
-
-    #read df
-    df = pd.read_csv(file_name)
-
-    #build client
-    client = discovery.build(
-    "commentanalyzer",
-    "v1alpha1",
-    developerKey=keys.PERS_KEY,
-    discoveryServiceUrl="https://commentanalyzer.googleapis.com/$discovery/rest?version=v1alpha1",
-    static_discovery=False,
-    )
-
-    #find starting index
-
-    analyze_request = {
-    'comment': { 'text': 'friendly greetings from python' },
-    'requestedAttributes': {'TOXICITY': {}},
-    }
-
-
-    idx = start_pos
-    for i in range(idx, end_pos):
-        #don't break the API lol
-        time.sleep(1)
-        tweet = df['text'].values[i]
-
-        #get rid of mentions
-        tweet = re.sub("@[A-Za-z0-9_]+","", tweet)
-
-        analyze_request['comment']['text'] = tweet 
-        try:
-            response = client.comments().analyze(body=analyze_request).execute()
-            tox_score = response['attributeScores']['TOXICITY']['summaryScore']['value']
-        except Exception as e:
-
-            print('failed', i, tweet)
-            tox_score = -1
-        
-        df.at[i, 'toxicity'] = tox_score
-        if i % 500 == 0:
-            df.to_csv(file_name)
-
-    #save df
-    df.to_csv(file_name)
-
-    return end_pos
-
-def get_detoxicity(file_name: pd.DataFrame, batch_size: int=10, start_pos: int=0, save_interval: int=10) -> pd.DataFrame:
-    """
-    Run this (with a number of requests) to analyze some amount of tweets for toxicity (via detoxify)
-
-    Parameters
-    ----------
-    file_name: str
-        the file containing the df to be updated
-    batch_size: int
-        batch size
-    start_pos: int
-        the index of the df to start at
-    save_interval: int
-        how many batches to save after
-    
-    Returns
-    -------
-    toxic_df: pd.DataFrame
-        dataframe with a new column for toxicity
-    """
-
-    #read df
-    #add cleaning of links and mentions to this
-    df = pd.read_csv(file_name)
-    detoxify_model = Detoxify('unbiased')
-    print('loaded detoxify model')
-    print('do not terminate when saving... is shown, only after saved')
-
-    s = start_pos
-    e = s + batch_size
-
-    for i in range(int((len(df) - start_pos) / batch_size)):
-        s += batch_size
-        e += batch_size
-        predict_update_df(df, detoxify_model, s, e)
-        if save_interval > 0 and i % save_interval == 0:
-            print('saving...', end='\r')
-            df.to_csv(file_name, index=False)
-            print('saved', s, '+', batch_size)
-
-    predict_update_df(df, detoxify_model, e, len(df))
-
-    #save df
-    df.to_csv(file_name, index=False)
-
-    print('saved all', e)
-
-def predict_update_df(df, detoxify_model, start_pos, end_pos):
-    """
-    Helper function for get_toxicity which makes a call to the detoxify model and 
-    updates the dataframe in-place
-
-    Parameters
-    ----------
-    df: pd.DataFrame
-        the dataframe to be updated
-    detoxify_model: model
-        model to use for inference
-    start_pos: int
-        the index of the df to start at
-    end_pos: int
-       the index of the df to end at
-    
-    Returns
-    -------
-    None
-    """
-    results = detoxify_model.predict(df['text'][start_pos:end_pos].tolist())
-    df.iloc[start_pos:end_pos, df.columns.get_loc('toxicity')] = results['toxicity']
-    df.iloc[start_pos:end_pos, df.columns.get_loc('severe_toxicity')] = results['severe_toxicity']
-    df.iloc[start_pos:end_pos, df.columns.get_loc('identity_attack')] = results['identity_attack']
 
 def get_sentiment(df, exists=False, downloads=False):
     """

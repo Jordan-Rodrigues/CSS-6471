@@ -145,3 +145,5 @@ dmypy.json
 
 #api
 /code/keys.py
+/code/pull_tweets/*.json
+/code/pull_tweets/twitter_keys.yaml
