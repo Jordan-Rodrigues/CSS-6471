@@ -5,3 +5,5 @@ fasttext
 google-api-python-client
 detoxify
 nltk
+scipy
+seaborn

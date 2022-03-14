@@ -266,5 +266,14 @@ def parse_tweets(df, exists=False, downloads=False):
 
     #drop abbreviated tweets
     df = df[~(df['text'].str.contains('…', regex=False))]
+
+    # drop tweets without dates
+    df = df[~df['date'].isna()]
+
+    # label which olympics they belong to
+    df['olympics'] = '0'
+    df['olympics'][df['date'] > '2022'] = '2022'
+    df['olympics'][df['date'] < '2022'] = '2020'
+
     df.to_csv('../data/parsed.csv', index=False)
     return df
