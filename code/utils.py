@@ -7,6 +7,7 @@ from nltk import tokenize
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+import location
 
 def get_merged(file_1: str, file_2: str, exists=False) -> pd.DataFrame:
     """
@@ -277,3 +278,101 @@ def parse_tweets(df, exists=False, downloads=False):
 
     df.to_csv('../data/parsed.csv', index=False)
     return df
+
+def get_bin_sent_and_tox(df, exists=False):
+    """
+    Helper function that takes continuous sentiment and toxicity outputs from the model (high variance) and bins them (lower variance)
+
+    Parameters
+    ----------
+    df: pd.DataFrame
+        the dataframe to be updated
+    exists : bool, optional
+        Flag on whether to generate eng or read from file
+    downloads: boolean
+        set downloads = true for the first time to download nltk packages
+
+    Returns
+    -------
+    df: pd.DataFrame
+        dataframe with a new binned columns for sentiment and toxicity
+    """
+    if exists == True:
+        return pd.read_csv('../data/binned.csv')
+    
+    df['sent_binned'] = 0
+    df['tox_binned'] = 0
+
+    #sent analysis
+    df.loc[df['sentiment'] <= -0.75, 'sent_binned'] = -4
+    df.loc[(df['sentiment'] > -0.75) & (df['sentiment'] <= -0.5), 'sent_binned'] = -3
+    df.loc[(df['sentiment'] > -0.5) & (df['sentiment'] <= -0.25),'sent_binned'] = -2
+    df.loc[(df['sentiment'] > -0.25) & (df['sentiment'] < 0), 'sent_binned'] = -1
+    df.loc[df['sentiment'] == 0, 'sent_binned'] = 0
+    df.loc[(df['sentiment'] < 0.25) & (df['sentiment'] > 0), 'sent_binned'] = 1
+    df.loc[(df['sentiment'] < 0.5) & (df['sentiment'] >= 0.25), 'sent_binned'] = 2
+    df.loc[(df['sentiment'] < 0.75) & (df['sentiment'] >= 0.5), 'sent_binned'] = 3
+    df.loc[df['sentiment'] >= 0.75, 'sent_binned'] = 4
+
+    #tox analysis
+    df.loc[(df['toxicity'] <= 0.33), 'tox_binned'] = 1
+    df.loc[(df['toxicity'] > 0.33) & (df['toxicity'] <= 0.67), 'tox_binned'] = 2
+    df.loc[(df['toxicity'] > 0.68), 'tox_binned'] = 3
+
+    df.to_csv('../data/binned.csv', index=False)    
+
+    return df
+    
+def get_loc(df, exists=False):
+    """
+    Helper function that takes the dataset and makes location categorical
+
+    Parameters
+    ----------
+    df: pd.DataFrame
+        the dataframe to be updated
+    exists : bool, optional
+        Flag on whether to generate eng or read from file
+
+
+    Returns
+    -------
+    df: pd.DataFrame
+        dataframe with a new column for categorical location
+    """
+    if exists == True:
+        return pd.read_csv('../data/location.csv')
+    
+    #set nulls
+    df["clean_loc"] = "None"
+    df.loc[df['user_location'].isna(), 'user_location'] = 'None'
+
+    #manual
+    df.loc[df['user_location'].str.lower().isin(['usa','nyc','u.s.a.','u.s.a']), 'clean_loc'] = 'USA'
+    df.loc[df['user_location'].str.lower().isin(['england', 'london','uk','leeds','essex', 'liverpool', 'scotland']), 'clean_loc'] = 'United Kingdom'
+    df.loc[df['user_location'].str.lower().isin(['new delhi', 'mumbai','chennai','kolkata']), 'clean_loc'] = 'India'
+    df.loc[df['user_location'].str.lower().str.contains('toronto'), 'clean_loc'] = 'Canada'
+    df.loc[df['user_location'].str.lower().str.contains('sydney'), 'clean_loc'] = 'Australia'
+    df.loc[df['user_location'].str.lower().str.contains('beijing'), 'clean_loc'] = 'China'
+    df.loc[df['user_location'].str.lower().str.contains('shanghai'), 'clean_loc'] = 'China'
+    df.loc[df['user_location'].str.lower().str.contains('tokyo'), 'clean_loc'] = 'Japan'
+    df.loc[df['user_location'].str.lower().str.contains('brasil'), 'clean_loc'] = 'Brazil'
+    df.loc[df['user_location'].str.lower().str.contains('dublin'), 'clean_loc'] = 'Ireland'
+
+    #auto do US states
+    for key, value in location.US_STATES.items():
+        df.loc[df['user_location'].str.lower().str.contains(value.lower()), 'clean_loc'] = 'United States'
+        df.loc[df['user_location'].str.lower().str.contains(key.lower()), 'clean_loc'] = 'United States'
+    
+    #auto do large us cities
+    for value in location.US_CITIES:
+        df.loc[df['user_location'].str.lower().str.contains(value.lower()), 'clean_loc'] = 'United States'
+
+    #auto do Global Countries
+    for key, value in location.COUNTRIES.items():
+        df.loc[df['user_location'].str.lower().str.contains(value.lower()), 'clean_loc'] = value
+
+    df.to_csv('../data/location.csv', index=False) 
+
+    return df
+
