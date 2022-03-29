@@ -1,3 +1,7 @@
+TOX_MAP = {'Low': 0, 'Moderate': 1, 'High':2}
+
+SENT_MAP = {'Strong Negative': -3,'Moderate Negative': -2, 'Weak Negative': -1, 'Neutral': 0, 'Weak Positive': 1, 'Moderate Positive': 2, 'Strong Positive': 3}
+
 US_STATES = {
     'AK': 'Alaska',
     'AL': 'Alabama',
