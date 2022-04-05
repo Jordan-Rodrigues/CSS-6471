@@ -1,3 +1,4 @@
+#TODO add specific versions
 pandas
 numpy
 spacy
@@ -7,3 +8,5 @@ detoxify
 nltk
 scipy
 seaborn
+gensim
+pyLDAvis
