@@ -27,7 +27,7 @@ class LDADF:
         -------
         None
         """
-        self.df = df[~df["parsed_tweets"].isna()]
+        self.df = df
 
     def create_dic_and_corp(self):
         """
@@ -43,19 +43,14 @@ class LDADF:
         corpus: tdf for each word in each document, for all docs
         """
         # create extra stopwords for removal
-        ex_stop = (
-            "olympic",
-            "olympics",
-            "i",
-            "s",
-            "",
-            "the",
-        )
+        ex_stop = ("olympic", "olympics", "i", "s", "", "the")
 
         words = self.df["parsed_tweets"].values
         hashtags = self.df["hashtags"].values
         i = 0
+        print("words len", len(words))
         tokenized = [0] * len(words)
+
         for tweet, tags, i in zip(words, hashtags, range(len(words))):
             # error handling for empty tweetsa
             tags = tags.strip("][").split(", ")
@@ -75,11 +70,14 @@ class LDADF:
             # Remove numbers, but not words that contain numbers.
             tweet = [x for x in tweet if not x.isnumeric()]
 
-            # Remove words that are only one character.
-            tweet = [x for x in tweet if len(x) > 1]
-
             # Remove non-ascii
             tweet = [x.encode("ascii", "ignore").decode() for x in tweet]
+
+            # Lowercase
+            tweet = [x.lower() for x in tweet]
+
+            # Remove words that are only one character.
+            tweet = [x for x in tweet if len(x) > 1]
 
             # Remove stopwords
             tweet = [x for x in tweet if x not in STOPWORDS]
@@ -102,5 +100,6 @@ class LDADF:
         )  # total is roughly 400K -- set no above greater than any individual proportion (want to keep beijing/tokyo) and no below to 75 tweets
         print("dic size:", len(dic))
         # Term Document Frequency
+        print("tokenized len", len(tokenized))
         corpus = [dic.doc2bow(tweet) for tweet in tokenized]
         return dic, corpus, tokenized
