@@ -399,7 +399,10 @@ def get_loc(df, exists=False):
         dataframe with a new column for categorical location
     """
     if exists == True:
-        return pd.read_csv("../data/location.csv")
+        try:
+            return pd.read_csv("../data/location.csv")
+        except:
+            return pd.read_csv("../final_data/location.csv")
 
     # set nulls
     df["clean_loc"] = "None"
