@@ -1,15 +1,27 @@
 # CSS-6471
 
-Use python `3.7.11`
+First, go to [Dropbox](https://www.dropbox.com/s/ig3ed7i5iepfbjj/final_data.zip?dl=0) and download final_data.zip. Then, uncompress it and place it in the root folder.
 
-Make sure to download the datasets ('Olympics' tweets dataset is `data/later_tweets.csv`, '#' tweets dataset is `early_tweets.csv`)
-Download model from [FastAI Language identification](https://fasttext.cc/docs/en/language-identification.html) (.bin version) and move to data folder
+To run simply run the results, run
 
-Request access to [Perspectives API](https://developers.perspectiveapi.com/s/docs-get-started). Follow guide, and put key into a `code/keys.py` file with `PERS_KEY=<key>`. 
+`conda create --name css_proj --file requirements.txt`
+`conda activate css_proj`
+`cd code`
+`python results.py`
 
-Run cells, make sure names for csv are consistent
+To build the datasets from scratch (not recommended)
 
-Notes:
-- Need to specify difference in tweet length as a function of year
-- Need to rerun toxicity with regex
-- Need to rerun sentiment code once \n issue is fixed
+1. Make a folder called `data`
+2. Get a Twitter API Key and save it into a file called `twitter_keys.yaml` in `/data/`
+3. Move the files from `final_data` to `data`
+4. Run `collectData.py` in `pull_tweets`
+5. Download language model from [FastAI Language identification](https://fasttext.cc/docs/en/language-identification.html) (.bin version) and move to data folder
+6. Run `eda.ipynb`
+
+OG Dataset Sources:
+earlier_tweets [source](https://www.kaggle.com/datasets/gpreda/tokyo-olympics-2020-tweets)
+later_tweets [source](https://www.kaggle.com/datasets/amritpal333/tokyo-olympics-2021-tweets)
+
+
+
+
