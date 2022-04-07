@@ -1,12 +1,11 @@
-#TODO add specific versions
-pandas
-numpy
-spacy
-fasttext
-google-api-python-client
-detoxify
-nltk
-scipy
-seaborn
-gensim
-pyLDAvis
+pandas==1.3.5
+numpy==1.21.5
+spacy==3.2.2
+fasttext==0.9.2
+detoxify==0.4.0
+nltk==3.7
+scipy==1.7.3
+seaborn==0.11.2
+gensim==3.8.3
+pyLDAvis==3.3.1
+matplotlib==3.5.1
