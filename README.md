@@ -1,6 +1,6 @@
 # CSS-6471
 
-First, go to [Dropbox](https://www.dropbox.com/s/ig3ed7i5iepfbjj/final_data.zip?dl=0) and download final_data.zip. Then, uncompress it and place it in the root folder.
+First, go to [Dropbox](https://www.dropbox.com/s/ig3ed7i5iepfbjj/final_data.zip?dl=0) and download final_data.zip. Then, uncompress it and place it in the root folder. Go inside final_data, and make sure lda_models is uncompressed as well.
 
 To run simply run the results, run
 
