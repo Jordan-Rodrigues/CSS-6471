@@ -1,13 +1,14 @@
 import pandas as pd
-import keys
 import re
 import time
 
 from detoxify import Detoxify
-from googleapiclient import discovery
 
+# DEPRECATED
+# from googleapiclient import discovery
 
-def get_toxicity(file_name: pd.DataFrame, start_pos: int, end_pos: int) -> pd.DataFrame:
+# DEPRECATED
+'''def get_toxicity(file_name: pd.DataFrame, start_pos: int, end_pos: int) -> pd.DataFrame:
     """
     Run this (with a number of requests) to analyze some amount of tweets for toxicity (via perspective API)
 
@@ -71,9 +72,16 @@ def get_toxicity(file_name: pd.DataFrame, start_pos: int, end_pos: int) -> pd.Da
     #save df
     df.to_csv(file_name)
 
-    return end_pos
+    return end_pos'''
 
-def get_toxicity_detoxify(df: pd.DataFrame, start_pos: int=0, save_interval: int=1000, exists: bool=False, file_name: str='../data/toxicity.csv') -> pd.DataFrame:
+
+def get_toxicity_detoxify(
+    df: pd.DataFrame,
+    start_pos: int = 0,
+    save_interval: int = 1000,
+    exists: bool = False,
+    file_name: str = "../data/toxicity.csv",
+) -> pd.DataFrame:
     """
     Run this to analyze some amount of tweets for toxicity (via detoxify)
 
@@ -98,41 +106,48 @@ def get_toxicity_detoxify(df: pd.DataFrame, start_pos: int=0, save_interval: int
     if exists:
         return pd.read_csv(file_name)
 
-    if 'toxicity' not in df.columns:
-        df['toxicity'] = -1.0
-    if 'severe_toxicity' not in df.columns:
-        df['severe_toxicity'] = -1.0
-    if 'identity_attack' not in df.columns:
-        df['identity_attack'] = -1.0
+    if "toxicity" not in df.columns:
+        df["toxicity"] = -1.0
+    if "severe_toxicity" not in df.columns:
+        df["severe_toxicity"] = -1.0
+    if "identity_attack" not in df.columns:
+        df["identity_attack"] = -1.0
 
-    detoxify_model = Detoxify('unbiased')
-    print('loaded detoxify model')
-    print('do not terminate when saving... is shown, only after saved')
+    detoxify_model = Detoxify("unbiased")
+    print("loaded detoxify model")
+    print("do not terminate when saving... is shown, only after saved")
 
-    tweets = df['text']
+    tweets = df["text"]
     for tweet, i in zip(tweets, range(len(tweets))):
-        #clean tweet
-        tweet = re.sub(r'\n','', tweet)
-        tweet = re.sub(r'\r','', tweet)
-        tweet = re.sub("@[A-Za-z0-9_]+","", tweet)
+        # clean tweet
+        tweet = re.sub(r"\n", "", tweet)
+        tweet = re.sub(r"\r", "", tweet)
+        tweet = re.sub("@[A-Za-z0-9_]+", "", tweet)
         tweet = re.sub(r"http\S+", "", tweet)
 
         results = detoxify_model.predict(tweet)
-        df.iloc[start_pos + i, df.columns.get_loc('toxicity')] = results['toxicity']
-        df.iloc[start_pos + i, df.columns.get_loc('severe_toxicity')] = results['severe_toxicity']
-        df.iloc[start_pos + i, df.columns.get_loc('identity_attack')] = results['identity_attack']
+        df.iloc[start_pos + i, df.columns.get_loc("toxicity")] = results["toxicity"]
+        df.iloc[start_pos + i, df.columns.get_loc("severe_toxicity")] = results[
+            "severe_toxicity"
+        ]
+        df.iloc[start_pos + i, df.columns.get_loc("identity_attack")] = results[
+            "identity_attack"
+        ]
 
         if save_interval > 0 and i % save_interval == 0:
-            print('saving...', end='\r')
+            print("saving...", end="\r")
             df.to_csv(file_name, index=False)
-            print('saved', i)
+            print("saved", i)
 
-    #save df
+    # save df
     df.to_csv(file_name, index=False)
 
-    print('saved all', len(tweets))
+    print("saved all", len(tweets))
 
-def get_toxicity_detoxify_batched(file_name: str, batch_size: int=2, start_pos: int=0, save_interval: int=10) -> pd.DataFrame:
+
+def get_toxicity_detoxify_batched(
+    file_name: str, batch_size: int = 2, start_pos: int = 0, save_interval: int = 10
+) -> pd.DataFrame:
     """
     Run this (with a number of requests) to analyze some amount of tweets for toxicity (via detoxify)
 
@@ -146,37 +161,37 @@ def get_toxicity_detoxify_batched(file_name: str, batch_size: int=2, start_pos: 
         the index of the df to start at
     save_interval: int
         how many batches to save after
-    
+
     Returns
     -------
     toxic_df: pd.DataFrame
         dataframe with a new column for toxicity
     """
 
-    #read df
-    #add cleaning of links and mentions to this
+    # read df
+    # add cleaning of links and mentions to this
     df = pd.read_csv(file_name)
 
-    if 'toxicity' not in df.columns:
-        df['toxicity'] = -1.0
-    if 'severe_toxicity' not in df.columns:
-        df['severe_toxicity'] = -1.0
-    if 'identity_attack' not in df.columns:
-        df['identity_attack'] = -1.0
+    if "toxicity" not in df.columns:
+        df["toxicity"] = -1.0
+    if "severe_toxicity" not in df.columns:
+        df["severe_toxicity"] = -1.0
+    if "identity_attack" not in df.columns:
+        df["identity_attack"] = -1.0
 
-    detoxify_model = Detoxify('unbiased')
-    print('loaded detoxify model')
-    print('do not terminate when saving... is shown, only after saved')
+    detoxify_model = Detoxify("unbiased")
+    print("loaded detoxify model")
+    print("do not terminate when saving... is shown, only after saved")
 
     s = start_pos
     e = s + batch_size
 
-    tweets = df['text']
+    tweets = df["text"]
     for tweet, i in zip(tweets, range(len(tweets))):
-        #clean tweet
-        tweet = re.sub(r'\n','', tweet)
-        tweet = re.sub(r'\r','', tweet)
-        tweet = re.sub("@[A-Za-z0-9_]+","", tweet)
+        # clean tweet
+        tweet = re.sub(r"\n", "", tweet)
+        tweet = re.sub(r"\r", "", tweet)
+        tweet = re.sub("@[A-Za-z0-9_]+", "", tweet)
         tweet = re.sub(r"http\S+", "", tweet)
 
     for i in range(int((len(df) - start_pos) / batch_size)):
@@ -184,20 +199,21 @@ def get_toxicity_detoxify_batched(file_name: str, batch_size: int=2, start_pos: 
         e += batch_size
         predict_update_df(df, detoxify_model, s, e)
         if save_interval > 0 and i % save_interval == 0:
-            print('saving...', end='\r')
+            print("saving...", end="\r")
             df.to_csv(file_name, index=False)
-            print('saved', s, '+', batch_size)
+            print("saved", s, "+", batch_size)
 
     predict_update_df(df, detoxify_model, e, len(df))
 
-    #save df
+    # save df
     df.to_csv(file_name, index=False)
 
-    print('saved all', e)
+    print("saved all", e)
+
 
 def predict_update_df(df, detoxify_model, start_pos, end_pos):
     """
-    Helper function for get_toxicity which makes a call to the detoxify model and 
+    Helper function for get_toxicity which makes a call to the detoxify model and
     updates the dataframe in-place
 
     Parameters
@@ -210,16 +226,22 @@ def predict_update_df(df, detoxify_model, start_pos, end_pos):
         the index of the df to start at
     end_pos: int
        the index of the df to end at
-    
+
     Returns
     -------
     None
     """
-    results = detoxify_model.predict(df['text'][start_pos:end_pos].tolist())
-    df.iloc[start_pos:end_pos, df.columns.get_loc('toxicity')] = results['toxicity']
-    df.iloc[start_pos:end_pos, df.columns.get_loc('severe_toxicity')] = results['severe_toxicity']
-    df.iloc[start_pos:end_pos, df.columns.get_loc('identity_attack')] = results['identity_attack']
+    results = detoxify_model.predict(df["text"][start_pos:end_pos].tolist())
+    df.iloc[start_pos:end_pos, df.columns.get_loc("toxicity")] = results["toxicity"]
+    df.iloc[start_pos:end_pos, df.columns.get_loc("severe_toxicity")] = results[
+        "severe_toxicity"
+    ]
+    df.iloc[start_pos:end_pos, df.columns.get_loc("identity_attack")] = results[
+        "identity_attack"
+    ]
 
 
-if __name__ == '__main__':
-    get_toxicity_detoxify(pd.read_csv('../data/toxicity.csv'), start_pos=0, save_interval=2000)
+if __name__ == "__main__":
+    get_toxicity_detoxify(
+        pd.read_csv("../data/toxicity.csv"), start_pos=0, save_interval=2000
+    )
