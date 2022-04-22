@@ -4,9 +4,11 @@ First, go to [Dropbox](https://www.dropbox.com/s/ig3ed7i5iepfbjj/final_data.zip?
 
 To run simply run the results, run
 
-`pip install -r requirements.txt`
+`conda create --name css_proj`
 
 `conda activate css_proj`
+
+`pip install -r requirements.txt`
 
 `cd code`
 
