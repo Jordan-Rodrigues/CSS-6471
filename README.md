@@ -8,6 +8,8 @@ To run simply run the results, run
 
 `conda activate css_proj`
 
+`conda install pip`
+
 `pip install -r requirements.txt`
 
 `cd code`
