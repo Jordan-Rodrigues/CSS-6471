@@ -4,9 +4,12 @@ First, go to [Dropbox](https://www.dropbox.com/s/ig3ed7i5iepfbjj/final_data.zip?
 
 To run simply run the results, run
 
-`conda create --name css_proj --file requirements.txt`
+`pip install -r requirements.txt`
+
 `conda activate css_proj`
+
 `cd code`
+
 `python results.py`
 
 To build the datasets from scratch (not recommended)
